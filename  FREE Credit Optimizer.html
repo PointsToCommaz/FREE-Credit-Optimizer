@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Credit Optimizer — Points to Commaz</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Epilogue:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* WHITE */
+body.theme-white{--bg:#ffffff;--surface:#f7f7f7;--surface2:#eeeeee;--border:#e0e0e0;--border2:#cccccc;--text:#111111;--muted:#888888;--subtle:#bbbbbb;--accent:#333333;--green:#1a7a3a;--green-bg:#e6f5ec;--green-border:#8ecba8;--yellow:#a07000;--yellow-bg:#fffbe6;--yellow-border:#d4b060;--red:#c0392b;--red-bg:#fce8e6;--red-border:#e8a09a;--orange:#b05000;--orange-bg:#faeee0;--orange-border:#e0b080;--btn-bg:#111111;--btn-text:#ffffff;}
+/* GREY */
+body.theme-grey{--bg:#e8e8e8;--surface:#dcdcdc;--surface2:#d0d0d0;--border:#c0c0c0;--border2:#adadad;--text:#1a1a1a;--muted:#666666;--subtle:#999999;--accent:#333333;--green:#1a7a3a;--green-bg:#e0f0e8;--green-border:#90cca8;--yellow:#a07000;--yellow-bg:#fef8e0;--yellow-border:#d4b060;--red:#bb2020;--red-bg:#fae8e8;--red-border:#e09090;--orange:#b05000;--orange-bg:#faeee0;--orange-border:#e0b080;--btn-bg:#1a1a1a;--btn-text:#e8e8e8;}
+/* TAN */
+body.theme-tan{--bg:#f5f0e8;--surface:#ede7d9;--surface2:#e4ddd0;--border:#d4cabf;--border2:#c4b8aa;--text:#1a1410;--muted:#7a6e62;--subtle:#b8a898;--accent:#8b6914;--green:#2d7a2d;--green-bg:#dff0df;--green-border:#a0cca0;--yellow:#b58800;--yellow-bg:#fef8dc;--yellow-border:#e8cc70;--red:#c0392b;--red-bg:#fae8e6;--red-border:#e8a09a;--orange:#c05000;--orange-bg:#faeee6;--orange-border:#e8b09a;--btn-bg:#1a1410;--btn-text:#f5f0e8;}
+/* PINK */
+body.theme-pink{--bg:#fdf0f5;--surface:#f8e2ec;--surface2:#f2d4e4;--border:#e8bcd4;--border2:#dba8c4;--text:#2a0a18;--muted:#9a5a78;--subtle:#d4a0b8;--accent:#c0204c;--green:#2d7a3a;--green-bg:#e0f5e8;--green-border:#90c8a0;--yellow:#b08000;--yellow-bg:#fef8dc;--yellow-border:#e8d070;--red:#c0202a;--red-bg:#fce8e8;--red-border:#e8a0a0;--orange:#b04800;--orange-bg:#faeee0;--orange-border:#e0b080;--btn-bg:#2a0a18;--btn-text:#fdf0f5;}
+/* DARK */
+body.theme-dark{--bg:#0d0d0d;--surface:#181818;--surface2:#222222;--border:#2e2e2e;--border2:#3a3a3a;--text:#f0f0f0;--muted:#777777;--subtle:#444444;--accent:#ffffff;--green:#4ade80;--green-bg:#052015;--green-border:#166534;--yellow:#facc15;--yellow-bg:#1a1500;--yellow-border:#854d0e;--red:#f87171;--red-bg:#1a0505;--red-border:#7f1d1d;--orange:#fb923c;--orange-bg:#1a0800;--orange-border:#7c2d00;--btn-bg:#f0f0f0;--btn-text:#0d0d0d;}
+
+body{background:var(--bg);color:var(--text);font-family:'Epilogue',sans-serif;font-size:15px;line-height:1.6;min-height:100vh;transition:background 0.3s,color 0.3s;}
+.container{max-width:780px;margin:0 auto;padding:36px 20px 80px;}
+
+.theme-bar{display:flex;align-items:center;gap:10px;margin-bottom:28px;flex-wrap:wrap;}
+.theme-bar span{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+.theme-btn{width:26px;height:26px;border-radius:50%;border:2px solid transparent;cursor:pointer;flex-shrink:0;}
+.theme-btn.t-white{background:#ffffff;border-color:#cccccc}.theme-btn.t-grey{background:#e8e8e8;border-color:#aaaaaa}.theme-btn.t-tan{background:#f5f0e8;border-color:#c4b8aa}.theme-btn.t-pink{background:#fdf0f5;border-color:#dba8c4}.theme-btn.t-dark{background:#0d0d0d;border-color:#f0f0f0}
+.theme-btn.active{outline:3px solid var(--accent);outline-offset:2px;}
+
+/* Glossary toggle in header bar */
+.header-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:12px;}
+.glossary-pill{background:var(--surface);border:1px solid var(--border2);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;font-family:'Syne',sans-serif;letter-spacing:0.04em;display:flex;align-items:center;gap:6px;}
+.glossary-pill:hover{color:var(--text);border-color:var(--accent);}
+
+.header{border-bottom:1px solid var(--border);padding-bottom:28px;margin-bottom:28px;}
+.brand-tag{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.header h1{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:var(--text);line-height:1.1;margin-bottom:20px;}
+
+.founder-quote{border-left:3px solid var(--border2);padding:12px 18px;margin-bottom:0;}
+.founder-quote p{font-size:14px;color:var(--muted);font-style:italic;line-height:1.7;margin-bottom:8px;}
+.founder-quote cite{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);font-style:normal;}
+
+.section-label{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px;margin-top:28px;}
+
+/* Cards */
+.card-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:18px 20px;margin-bottom:10px;}
+.card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.card-name-input{background:none;border:none;font-family:'Syne',sans-serif;font-size:15px;font-weight:700;color:var(--text);width:calc(100% - 32px);padding:0;}
+.card-name-input:focus{outline:none;}
+.card-name-input::placeholder{color:var(--subtle);}
+.remove-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:0;flex-shrink:0;}
+.remove-btn:hover{color:var(--red);}
+.card-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.field-group label{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);margin-bottom:5px;font-weight:500;}
+.field-group input,.field-group textarea{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:14px;color:var(--text);font-family:'Epilogue',sans-serif;}
+.field-group input:focus,.field-group textarea:focus{outline:none;border-color:var(--accent);}
+.field-group input::placeholder,.field-group textarea::placeholder{color:var(--subtle);}
+.field-group textarea{resize:none;height:58px;font-size:13px;}
+
+/* Util preview */
+.util-preview{margin-top:14px;padding-top:14px;border-top:1px solid var(--border);display:none;}
+.util-preview.show{display:block;}
+.util-status-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.util-status-row span{font-size:12px;color:var(--muted);}
+.util-pill{font-size:13px;font-weight:700;padding:3px 10px;border-radius:20px;}
+.util-pill.optimal{background:var(--green-bg);color:var(--green);}
+.util-pill.good{background:#e8f5e8;color:#3a8a3a;}
+.util-pill.acceptable{background:var(--yellow-bg);color:var(--yellow);}
+.util-pill.high{background:var(--red-bg);color:var(--red);}
+.util-tiers{display:grid;grid-template-columns:1fr;gap:6px;}
+.util-tier{background:var(--surface2);border-radius:8px;padding:8px 10px;}
+.util-tier .tier-label{font-size:10px;color:var(--muted);margin-bottom:4px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;}
+.util-tier .tier-amt{font-weight:700;font-size:14px;margin-bottom:3px;}
+.util-tier .tier-pay{font-size:11px;color:var(--muted);line-height:1.3;}
+
+.add-card-btn{width:100%;background:none;border:1px dashed var(--border2);border-radius:12px;padding:13px;font-size:13px;color:var(--muted);cursor:pointer;font-family:'Epilogue',sans-serif;margin-top:4px;}
+.add-card-btn:hover{border-color:var(--accent);color:var(--text);}
+.add-card-btn.locked{border-style:solid;border-color:var(--border2);color:var(--text);font-weight:700;background:var(--surface);}
+.add-card-btn.locked:hover{border-color:var(--accent);}
+
+/* Factors */
+.factors-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:16px;}
+.factor-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;}
+.factor-item label{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);margin-bottom:8px;font-weight:500;line-height:1.4;}
+.factor-item input{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:18px;font-weight:700;color:var(--text);font-family:'Syne',sans-serif;}
+.factor-item input:focus{outline:none;border-color:var(--accent);}
+.factor-item input::placeholder{color:var(--subtle);font-weight:400;font-family:'Epilogue',sans-serif;font-size:13px;}
+
+/* Info button */
+.info-btn{width:16px;height:16px;border-radius:50%;background:var(--surface2);border:1px solid var(--border2);color:var(--muted);font-size:10px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;}
+.info-btn:hover{background:var(--accent);color:var(--btn-text);border-color:var(--accent);}
+.tooltip{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:var(--text);color:var(--bg);font-size:11px;line-height:1.5;padding:8px 12px;border-radius:8px;width:220px;z-index:100;font-family:'Epilogue',sans-serif;font-weight:400;}
+.tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--text);}
+.info-btn:hover .tooltip,.info-btn:focus .tooltip{display:block;}
+
+.chase-row{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:28px;}
+.chase-row label{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);margin-bottom:8px;font-weight:500;}
+.chase-row input{width:120px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;padding:9px 12px;font-size:18px;font-weight:700;color:var(--text);font-family:'Syne',sans-serif;}
+.chase-row input:focus{outline:none;border-color:var(--accent);}
+.chase-note{font-size:12px;color:var(--muted);margin-top:8px;}
+
+/* Analyze button */
+.analyze-btn{width:100%;background:var(--btn-bg);color:var(--btn-text);border:none;border-radius:10px;padding:16px;font-family:'Syne',sans-serif;font-size:15px;font-weight:800;letter-spacing:0.05em;cursor:pointer;transition:opacity 0.2s;margin-bottom:8px;}
+.analyze-btn:hover{opacity:0.85;}
+.save-confirm{font-size:12px;color:var(--green);text-align:center;height:16px;margin-bottom:28px;}
+
+/* Results */
+.results{display:none;}
+.results.show{display:block;}
+
+/* Download button at top of results */
+.download-top{width:100%;border:none;border-radius:10px;padding:14px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;margin-bottom:16px;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity 0.2s;}
+.download-top:hover{opacity:0.85;}
+
+/* Credit tier banner */
+.tier-banner{border-radius:12px;padding:22px 24px;margin-bottom:16px;border:1px solid;}
+.tier-banner.bad{background:var(--red-bg);border-color:var(--red-border);}
+.tier-banner.needs{background:var(--orange-bg);border-color:var(--orange-border);}
+.tier-banner.good{background:var(--yellow-bg);border-color:var(--yellow-border);}
+.tier-banner.strong{background:var(--green-bg);border-color:var(--green-border);}
+.tier-label-text{font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;margin-bottom:5px;}
+.tier-banner.bad .tier-label-text{color:var(--red);}
+.tier-banner.needs .tier-label-text{color:var(--orange,#c05000);}
+.tier-banner.good .tier-label-text{color:var(--yellow);}
+.tier-banner.strong .tier-label-text{color:var(--green);}
+.tier-title{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;margin-bottom:6px;}
+.tier-banner.bad .tier-title{color:var(--red);}
+.tier-banner.needs .tier-title{color:var(--orange,#c05000);}
+.tier-banner.good .tier-title{color:var(--yellow);}
+.tier-banner.strong .tier-title{color:var(--green);}
+.tier-sub{font-size:13px;color:var(--muted);line-height:1.6;}
+.tier-fundable-note{font-size:12px;margin-top:10px;padding:8px 12px;background:var(--green-bg);border:1px solid var(--green-border);border-radius:8px;color:var(--green);display:none;}
+.tier-fundable-note.show{display:block;}
+.tier-ebook-note{font-size:12px;margin-top:10px;padding:8px 12px;background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text);display:none;}
+.tier-ebook-note.show{display:block;}
+.tier-ebook-note a{color:var(--accent);font-weight:700;}
+.phase-link{display:inline-block;margin-top:12px;font-size:13px;font-weight:700;color:var(--green);text-decoration:none;border:1px solid var(--green-border);border-radius:8px;padding:8px 14px;}
+.phase-link:hover{opacity:0.8;}
+
+.stat-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.stat-label{font-size:11px;color:var(--muted);margin-bottom:6px;}
+.stat-value{font-family:'Syne',sans-serif;font-size:26px;font-weight:800;}
+.stat-bar{height:4px;background:var(--border2);border-radius:2px;overflow:hidden;margin-top:10px;}
+.stat-fill{height:100%;border-radius:2px;}
+
+.plan-title{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;margin-top:4px;}
+
+.result-item{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:8px;display:flex;gap:14px;align-items:flex-start;}
+.ri-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;margin-top:6px;}
+.ri-dot.pass{background:var(--green);}.ri-dot.warn{background:var(--yellow);}.ri-dot.fail{background:var(--red);}
+.ri-label{font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px;font-family:'Syne',sans-serif;}
+.ri-detail{font-size:13px;color:var(--muted);filter:blur(3px);user-select:none;pointer-events:none;}
+.ri-action{font-size:13px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);line-height:1.7;}
+.ri-action strong{color:var(--text);}
+.ri-action a{color:var(--accent);}
+
+.info-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;margin-bottom:8px;font-size:13px;color:var(--muted);line-height:1.6;}
+.info-card strong{color:var(--text);display:block;font-family:'Syne',sans-serif;font-size:12px;letter-spacing:0.08em;text-transform:uppercase;margin-bottom:6px;}
+.info-card a{color:var(--accent);}
+
+/* Glossary modal */
+.glossary-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:200;align-items:flex-end;justify-content:center;}
+.glossary-overlay.open{display:flex;}
+.glossary-modal{background:var(--bg);border-radius:16px 16px 0 0;padding:24px 20px 40px;max-height:80vh;overflow-y:auto;width:100%;max-width:780px;}
+.glossary-modal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.glossary-modal-header h3{font-family:'Syne',sans-serif;font-size:16px;font-weight:800;}
+.glossary-close{background:none;border:none;font-size:22px;color:var(--muted);cursor:pointer;padding:0;}
+.glossary-close:hover{color:var(--text);}
+.glossary-item{padding:12px 0;border-bottom:1px solid var(--border);}
+.glossary-item:last-child{border-bottom:none;}
+.glossary-term{font-family:'Syne',sans-serif;font-size:13px;font-weight:700;color:var(--text);margin-bottom:3px;}
+.glossary-def{font-size:13px;color:var(--muted);line-height:1.6;}
+
+.footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);text-align:center;font-size:12px;color:var(--muted);}
+.footer strong{color:var(--text);font-family:'Syne',sans-serif;}
+
+@media(max-width:560px){
+  .header h1{font-size:26px;}
+  .card-fields{grid-template-columns:1fr;}
+  .stat-row{grid-template-columns:1fr;}
+  .factors-grid{grid-template-columns:1fr 1fr;}
+  .util-tiers{grid-template-columns:1fr;}
+}
+
+/* ── LOCKED / FREE VERSION STYLES ── */
+.locked-action {
+  position: relative;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+.locked-blur {
+  filter: blur(4px);
+  user-select: none;
+  pointer-events: none;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.7;
+  max-height: 60px;
+  overflow: hidden;
+}
+.locked-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(to bottom, transparent 0%, var(--surface) 60%);
+  border-radius: 0 0 8px 8px;
+}
+.lock-icon {
+  font-size: 18px;
+}
+.lock-cta-btn {
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'Syne', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  display: inline-block;
+}
+.lock-cta-btn:hover { opacity: 0.85; }
+
+.wealth-pack-cta {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 12px;
+  padding: 22px 24px;
+  text-align: center;
+  margin-top: 16px;
+}
+.wealth-pack-cta p {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+.wealth-pack-cta p strong { color: var(--text); }
+.wealth-pack-cta-btn {
+  display: inline-block;
+  background: var(--btn-bg);
+  color: var(--btn-text);
+  border: none;
+  border-radius: 10px;
+  padding: 14px 28px;
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  text-decoration: none;
+}
+.wealth-pack-cta-btn:hover { opacity: 0.85; }
+</style>
+</head>
+<body class="theme-tan">
+<div class="container">
+
+  <div class="header-bar">
+    <div class="theme-bar" style="margin-bottom:0;">
+      <span>Theme</span>
+      <button class="theme-btn t-white" onclick="setTheme('white',this)" title="White"></button>
+      <button class="theme-btn t-grey" onclick="setTheme('grey',this)" title="Grey"></button>
+      <button class="theme-btn t-tan active" onclick="setTheme('tan',this)" title="Tan"></button>
+      <button class="theme-btn t-pink" onclick="setTheme('pink',this)" title="Pink"></button>
+      <button class="theme-btn t-dark" onclick="setTheme('dark',this)" title="Dark"></button>
+    </div>
+    <button class="glossary-pill" onclick="openGlossary()">📖 Terms</button>
+  </div>
+
+  <div class="header">
+    <div class="brand-tag">Points to Commaz</div>
+    <h1>Credit Optimizer</h1>
+    <div class="founder-quote">
+      <p>"Most people judge their credit by their score alone — This tool breaks down exactly where you stand and tells you what to do to build the strongest credit profile possible for your situation."</p>
+      <cite>— Eli Wolf, Founder of Wolf Den Ventures LLC</cite>
+      <p style="margin-top:10px;font-size:12px;color:var(--muted);">Haven't gone through the Wealth Pack yet? <a href="https://whop.com/joined/points-to-commaz/the-wealth-pack-vl0KVLcJJKJUAy/app/" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">Start there first.</a></p>
+    </div>
+  </div>
+
+  <div class="section-label">Your credit cards</div>
+  <div id="cardsWrap"></div>
+  <button class="add-card-btn" id="addCardBtn" onclick="handleAddCardClick()">+ Add another card</button>
+
+  <div class="section-label" style="display:flex;align-items:center;gap:6px;">Credit profile factors
+  <button class="info-btn" tabindex="0" style="flex-shrink:0;">i<span class="tooltip" style="width:260px;">You can find all of these data points broken down on your credit report at <a href="https://www.transunion.com" target="_blank" style="color:#14B0E3;">TransUnion</a>, <a href="https://www.equifax.com" target="_blank" style="color:#14B0E3;">Equifax</a>, or <a href="https://www.experian.com" target="_blank" style="color:#14B0E3;">Experian</a>. Log in and look for your score breakdown — it will show each factor and how it's affecting you.</span></button>
+</div>
+  <div class="factors-grid">
+    <div class="factor-item">
+      <label>Payment history (%)
+        <button class="info-btn" tabindex="0">i<span class="tooltip">The percentage of all your payments made on time across every account. This is the single most important factor in your credit profile. Even one missed payment can hurt you significantly.</span></button>
+      </label>
+      <input type="number" id="payHistory" min="0" max="100" placeholder="e.g. 98" />
+    </div>
+    <div class="factor-item">
+      <label>Derogatory marks
+        <button class="info-btn" tabindex="0">i<span class="tooltip">Negative items on your report like collections, bankruptcies, tax liens, or civil judgments. These tell lenders something went seriously wrong and need to be removed or disputed to strengthen your profile.</span></button>
+      </label>
+      <input type="number" id="derogatory" min="0" placeholder="e.g. 0" />
+    </div>
+    <div class="factor-item">
+      <label>Avg credit age (yrs)
+        <button class="info-btn" tabindex="0">i<span class="tooltip">The average age of all your open and closed credit accounts combined. Older is better. Never close old accounts — even unused ones keep your average age up.</span></button>
+      </label>
+      <input type="number" id="creditAge" min="0" step="0.5" placeholder="e.g. 5" />
+    </div>
+    <div class="factor-item">
+      <label>Total accounts
+        <button class="info-btn" tabindex="0">i<span class="tooltip">The total number of credit accounts ever opened in your name — both open and closed ones count. More accounts shows lenders you have experience managing credit responsibly.</span></button>
+      </label>
+      <input type="number" id="totalAccounts" min="0" placeholder="e.g. 8" />
+    </div>
+    <div class="factor-item">
+      <label>Hard inquiries
+        <button class="info-btn" tabindex="0">i<span class="tooltip">Every time you apply for new credit, the lender runs a hard inquiry on your report. Too many in a short period signals risk. They stop affecting your score after 12 months and fall off completely after 2 years.</span></button>
+      </label>
+      <input type="number" id="hardInquiries" min="0" placeholder="e.g. 2" />
+    </div>
+  </div>
+
+  <button class="analyze-btn" onclick="analyze()">Analyze my profile →</button>
+  <div class="save-confirm" id="saveConfirm"></div>
+
+  <div class="results" id="results">
+
+    <div class="tier-banner" id="tierBanner">
+      <div class="tier-label-text" id="tierLabel"></div>
+      <div class="tier-title" id="tierTitle"></div>
+      <div class="tier-sub" id="tierSub"></div>
+      <div class="tier-fundable-note" id="fundableNote">
+        Your profile is strong — now learn how to use it. The Wealth Pack shows you exactly how to leverage your credit to its full potential.
+        <br/><a class="phase-link" href="https://whop.com/checkout/plan_CMBpMvmsunZEw" target="_blank" rel="noopener">Get the Wealth Pack →</a>
+      </div>
+      <div class="tier-ebook-note" id="ebookNote">
+        Before anything else, get your head right about how credit actually works — that's the part that trips people up first. Start with the free ebook.
+        <br/><a href="https://docs.google.com/forms/d/e/1FAIpQLSfXJFdixHwzJxy_MKmkn0dcpBl_elWuv7pUQZzLqWr2_4vNSQ/viewform?pli=1" target="_blank" rel="noopener">Get the free ebook →</a>
+      </div>
+    </div>
+
+    <div id="downloadBtn" style="display:none;"></div><!-- download locked in free version -->
+
+    <div class="stat-row" id="statRow"></div>
+    <div class="plan-title" style="font-size:13px;color:var(--text);letter-spacing:0.08em;margin-top:12px;margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:10px;">ACTION PLAN</div>
+    <div id="resultItems"></div>
+
+    <div class="info-card" id="chaseAmexCard" style="display:none;">
+      <strong style="display:flex;align-items:center;gap:6px;">Funding sequence awareness
+        <button class="info-btn" tabindex="0" style="flex-shrink:0;">i<span class="tooltip" style="width:260px;">A funding sequence is a strategic plan for applying for credit in the right order to maximize approvals. This is covered in full inside the Wealth Pack.</span></button>
+      </strong>
+      <div class="locked-action">
+        <div class="locked-blur" id="chaseAmexContent">Chase 5/24 rule, Amex pull strategy, soft pull preferences, issuer sequencing — all of this is covered in detail inside the Wealth Pack so you know exactly which cards to apply for and in what order.</div>
+        <div class="locked-overlay">
+          <span class="lock-icon">🔒</span>
+          <a class="lock-cta-btn" href="https://whop.com/checkout/plan_CMBpMvmsunZEw" target="_blank" rel="noopener">Unlock inside the Wealth Pack</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-card">
+      <strong>Pull your free credit report</strong>
+      Get your full report from all three bureaus at <a href="https://www.annualcreditreport.com" target="_blank" rel="noopener">AnnualCreditReport.com</a> — the only federally authorized free source. You're entitled to one free report per bureau per year. Use it strategically, especially after working on your profile.
+    </div>
+
+    <div class="wealth-pack-cta">
+      <p><strong>You can see exactly what's holding your credit back.</strong><br/>Your full optimization plan — what to do, in what order, for your specific situation — is inside the Wealth Pack.</p>
+      <a class="wealth-pack-cta-btn" href="https://whop.com/checkout/plan_CMBpMvmsunZEw" target="_blank" rel="noopener">Get your complete credit optimization plan →</a>
+    </div>
+
+    <div class="info-card">
+      <strong>Dispute inaccurate items</strong>
+      Dispute inaccurate items directly on each bureau's website or app.<br/><br/>
+      <a href="https://www.equifax.com/personal/credit-report-services/credit-dispute/" target="_blank" rel="noopener">Equifax</a> &nbsp;|&nbsp;
+      <a href="https://www.experian.com/disputes/main.html" target="_blank" rel="noopener">Experian</a> &nbsp;|&nbsp;
+      <a href="https://dispute.transunion.com" target="_blank" rel="noopener">TransUnion</a><br/>
+      Or call: Equifax 1-888-548-7878 &nbsp;|&nbsp; Experian 1-855-414-6048 &nbsp;|&nbsp; TransUnion 1-800-916-8800
+    </div>
+
+  </div>
+
+  <div class="footer">Built by <strong>@TheRealEliWolf</strong> — Points to Commaz &nbsp;|&nbsp; <a href="https://whop.com/checkout/plan_CMBpMvmsunZEw" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;font-weight:600;">Get the Wealth Pack</a></div>
+</div>
+
+<!-- Glossary Modal -->
+<div class="glossary-overlay" id="glossaryOverlay" onclick="closeGlossaryOutside(event)">
+  <div class="glossary-modal">
+    <div class="glossary-modal-header">
+      <h3>📖 Terms & Definitions</h3>
+      <button class="glossary-close" onclick="closeGlossary()">✕</button>
+    </div>
+    <div class="glossary-item"><div class="glossary-term">Credit Score</div><div class="glossary-def">A number between 300 and 850 that reflects how your credit profile looks to lenders. 700 is considered good, 800 is excellent. Your score is a result of the 6 factors in this tool — fix the factors and the score follows.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Payment History</div><div class="glossary-def">The percentage of all payments you've made on time across every account. The most important factor in your profile. One missed payment can stay on your report for 7 years.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Credit Utilization</div><div class="glossary-def">How much of your available credit limit you're using. 0–3% is the best. 4–6% is good. Anything over 30% starts hurting your profile. Applies to each card individually and all your cards combined.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Derogatory Mark</div><div class="glossary-def">A negative item on your credit report — collections, bankruptcies, tax liens, late payments, or civil judgments. These tell lenders something went wrong and need to be disputed or resolved.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Credit Age</div><div class="glossary-def">The average age of all your credit accounts. Older accounts make your profile stronger. Never close old accounts even if you don't use them — they keep your average age up.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Hard Inquiry</div><div class="glossary-def">A credit check that happens when you apply for new credit. It shows up on your report and can lower your score temporarily. Stops affecting your score after 12 months and falls off after 2 years. Always ask issuers if they use soft pulls before applying.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Soft Inquiry</div><div class="glossary-def">A credit check that does NOT affect your score. Pre-approvals and personal credit monitoring use soft pulls. Always aim for issuers that allow soft pulls on applications and limit increase requests.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Authorized User</div><div class="glossary-def">When someone adds you to their credit card account. You don't need the physical card — their account history reports on your credit profile. Best accounts to be added to are 5+ years old with under 5% utilization. Helps both your credit age and total accounts.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Tradeline</div><div class="glossary-def">Any credit account that shows up on your report — credit cards, loans, authorized user accounts. Aged tradelines (5+ years old, under 5% utilization) are especially valuable.</div></div>
+    <div class="glossary-item"><div class="glossary-term">609 Letter</div><div class="glossary-def">A letter sent to the credit bureaus invoking your rights under Section 609 of the Fair Credit Reporting Act. You're requesting they show proof of the information on your report. Used after a basic dispute comes back verified. Send via certified mail.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Validation of Debt</div><div class="glossary-def">A letter sent directly to the original creditor — not the bureau — asking them to prove the debt is yours and accurate. Used after a 609 letter. Allow 30–45 days for response.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Chase 5/24</div><div class="glossary-def">Chase's rule that automatically denies most card applications if you've opened 5 or more personal credit cards from any bank in the last 24 months. Business cards from Chase don't count toward the limit but personal cards from every other bank do.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Amex Pull Strategy</div><div class="glossary-def">After your first Amex personal card application (which is a hard pull), most additional Amex cards won't trigger another hard pull. But if you get an Amex business card first then apply for a personal one, you'll take a second hard pull. Always get a personal Amex card before any Amex business card.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Fundable</div><div class="glossary-def">When your credit profile is strong enough that lenders and card issuers are most likely to approve you — at the best rates and highest limits. Being fundable means your profile looks like low risk to anyone who pulls it.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Funding Sequence</div><div class="glossary-def">A strategic plan for applying for credit cards or loans in a specific order to maximize approvals and limits. The order matters — different issuers have different rules and pull from different bureaus, so sequencing correctly protects your inquiries and increases your odds.</div></div>
+    <div class="glossary-item"><div class="glossary-term">Gardening Phase</div><div class="glossary-def">The period where you focus on repairing and structuring your credit before applying for anything new. You're building the foundation — cleaning up negatives, lowering utilization, adding accounts strategically.</div></div>
+  </div>
+</div>
+
+<script>
+let cardCount = 0;
+let lastResults = [];
+
+function setTheme(name, btn) {
+  document.body.className = 'theme-' + name;
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  localStorage.setItem('ptc_theme', name);
+}
+
+function openGlossary() { document.getElementById('glossaryOverlay').classList.add('open'); }
+function closeGlossary() { document.getElementById('glossaryOverlay').classList.remove('open'); }
+function closeGlossaryOutside(e) { if (e.target === document.getElementById('glossaryOverlay')) closeGlossary(); }
+
+function addCard(data) {
+  const id = 'card_' + cardCount++;
+  const wrap = document.getElementById('cardsWrap');
+  const div = document.createElement('div');
+  div.className = 'card-item';
+  div.id = id;
+  div.innerHTML = `
+    <div class="card-header">
+      <input class="card-name-input" type="text" placeholder="Card name (e.g. Chase Sapphire)" value="${data?.name||''}" />
+      <button class="remove-btn" onclick="removeCard('${id}')">✕</button>
+    </div>
+    <div class="card-fields">
+      <div class="field-group"><label>Balance ($)</label><input type="number" placeholder="0" value="${data?.bal||''}" oninput="liveUtil('${id}')" /></div>
+      <div class="field-group"><label>Credit limit ($)</label><input type="number" placeholder="0" value="${data?.lim||''}" oninput="liveUtil('${id}')" /></div>
+      <div class="field-group"><label>APR (%)</label><input type="number" placeholder="e.g. 24.99" value="${data?.apr||''}" /></div>
+      <div class="field-group"><label>Promo rate (%) — optional</label><input type="number" placeholder="e.g. 0" value="${data?.promoApr||''}" /></div>
+      <div class="field-group" style="grid-column:span 2"><label>Promo expiration — optional (MM/YYYY)</label><input type="text" placeholder="e.g. 12/2025" value="${data?.promoExp||''}" /></div>
+      <div class="field-group" style="grid-column:span 2"><label>Notes — optional</label><textarea placeholder="e.g. balance transfer candidate, promo ending soon...">${data?.notes||''}</textarea></div>
+    </div>
+    <div class="util-preview" id="util_${id}">
+      <div class="util-status-row">
+        <span>Utilization</span>
+        <span class="util-pill" id="util_pill_${id}">—</span>
+      </div>
+      <div class="util-tiers" id="util_tiers_${id}"></div>
+    </div>`;
+  wrap.appendChild(div);
+  if (data?.bal && data?.lim) liveUtil(id);
+  updateAddCardBtn();
+}
+
+function removeCard(id) {
+  const el = document.getElementById(id);
+  if (el) el.remove();
+  updateAddCardBtn();
+}
+
+const MAX_FREE_CARDS = 2;
+
+function handleAddCardClick() {
+  const count = document.querySelectorAll('.card-item').length;
+  if (count >= MAX_FREE_CARDS) {
+    window.open('https://whop.com/checkout/plan_CMBpMvmsunZEw', '_blank', 'noopener');
+    return;
+  }
+  addCard();
+}
+
+function updateAddCardBtn() {
+  const btn = document.getElementById('addCardBtn');
+  if (!btn) return;
+  const count = document.querySelectorAll('.card-item').length;
+  if (count >= MAX_FREE_CARDS) {
+    btn.innerHTML = '🔒 Add more cards — Unlock in Wealth Pack';
+    btn.classList.add('locked');
+  } else {
+    btn.innerHTML = '+ Add another card';
+    btn.classList.remove('locked');
+  }
+}
+
+function liveUtil(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const inputs = el.querySelectorAll('.card-fields input[type=number]');
+  const bal = parseFloat(inputs[0].value) || 0;
+  const lim = parseFloat(inputs[1].value) || 0;
+  if (!lim) return;
+  const pct = Math.round((bal / lim) * 100);
+  el.querySelector('.util-preview').classList.add('show');
+  const pill = document.getElementById('util_pill_' + id);
+  pill.className = 'util-pill ' + utilClass(pct);
+  pill.textContent = pct + '% — ' + utilLabel(pct);
+  const t30 = Math.ceil(lim * 0.30);
+  document.getElementById('util_tiers_' + id).innerHTML = `
+    <div class="util-tier">
+      <div class="tier-label">Minimum (30%)</div>
+      <div class="tier-amt" style="color:#b58800">$${t30.toLocaleString()}</div>
+    </div>`;
+}
+
+function utilClass(pct) { return pct<=3?'optimal':pct<=6?'good':pct<=30?'acceptable':'high'; }
+function utilLabel(pct) { return pct<=3?'Best':pct<=6?'Good':pct<=30?'Acceptable — above goal':'High — needs attention'; }
+function utilColor(pct) { return pct<=3?'#2d7a2d':pct<=6?'#5a9a5a':pct<=30?'#b58800':'#c0392b'; }
+
+function getCards() {
+  const results = [];
+  document.querySelectorAll('.card-item').forEach(el => {
+    const name = el.querySelector('.card-name-input')?.value || 'Card';
+    const inputs = el.querySelectorAll('.card-fields input');
+    const notes = el.querySelector('textarea')?.value || '';
+    const bal = parseFloat(inputs[0]?.value)||0;
+    const lim = parseFloat(inputs[1]?.value)||0;
+    const apr = parseFloat(inputs[2]?.value)||0;
+    const promoApr = inputs[3]?.value||'';
+    const promoExp = inputs[4]?.value||'';
+    if (lim>0) results.push({name,bal,lim,apr,promoApr,promoExp,notes,util:Math.round((bal/lim)*100)});
+  });
+  return results;
+}
+
+function saveData() {
+  const cards = [];
+  document.querySelectorAll('.card-item').forEach(el => {
+    const inputs = el.querySelectorAll('.card-fields input');
+    cards.push({
+      name: el.querySelector('.card-name-input')?.value||'',
+      bal:inputs[0]?.value||'',lim:inputs[1]?.value||'',
+      apr:inputs[2]?.value||'',promoApr:inputs[3]?.value||'',
+      promoExp:inputs[4]?.value||'',notes:el.querySelector('textarea')?.value||''
+    });
+  });
+  localStorage.setItem('ptc_credit_data', JSON.stringify({
+    cards,
+    payHistory:document.getElementById('payHistory').value,
+    derogatory:document.getElementById('derogatory').value,
+    creditAge:document.getElementById('creditAge').value,
+    totalAccounts:document.getElementById('totalAccounts').value,
+    hardInquiries:document.getElementById('hardInquiries').value
+  }));
+  const confirm = document.getElementById('saveConfirm');
+  confirm.textContent = '✓ Progress saved';
+  setTimeout(()=>confirm.textContent='', 2500);
+}
+
+function loadData() {
+  const saved = localStorage.getItem('ptc_credit_data');
+  if (!saved) return;
+  try {
+    const data = JSON.parse(saved);
+    if (data.cards?.length) {
+      document.getElementById('cardsWrap').innerHTML='';
+      cardCount=0;
+      data.cards.forEach(c=>addCard(c));
+    }
+    if (data.payHistory) document.getElementById('payHistory').value=data.payHistory;
+    if (data.derogatory) document.getElementById('derogatory').value=data.derogatory;
+    if (data.creditAge) document.getElementById('creditAge').value=data.creditAge;
+    if (data.totalAccounts) document.getElementById('totalAccounts').value=data.totalAccounts;
+    if (data.hardInquiries) document.getElementById('hardInquiries').value=data.hardInquiries;
+  } catch(e){}
+}
+
+function loadTheme() {
+  const t = localStorage.getItem('ptc_theme');
+  if (t) {
+    document.body.className='theme-'+t;
+    document.querySelectorAll('.theme-btn').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.theme-btn').forEach(b=>{ if(b.title.toLowerCase()===t) b.classList.add('active'); });
+  }
+}
+
+function analyze() {
+  saveData();
+
+  const payHistory = parseFloat(document.getElementById('payHistory').value);
+  const derogatory = parseFloat(document.getElementById('derogatory').value);
+  const creditAge = parseFloat(document.getElementById('creditAge').value);
+  const totalAccounts = parseFloat(document.getElementById('totalAccounts').value);
+  const hardInquiries = parseFloat(document.getElementById('hardInquiries').value);
+
+  const cards = getCards();
+  let totalBal=0,totalLim=0;
+  cards.forEach(c=>{totalBal+=c.bal;totalLim+=c.lim;});
+  const overallUtil = totalLim>0?Math.round((totalBal/totalLim)*100):null;
+
+  const items = [];
+
+  if (!isNaN(payHistory)) {
+    const pass=payHistory>=100;
+    items.push({status:pass?'pass':'fail',label:'Payment history',detail:payHistory+'% on-time — needs to be 100%',
+      action:pass?null:'<strong>Call the creditor first</strong> and ask if they have a forgiveness program — speak to at least 3 different people, the first person who answers may not be the one who can help. Send a goodwill letter if no one assists. <strong>Dispute process:</strong> Step 1 — file a basic dispute online at each bureau\'s website or app (links below). Step 2 — if it comes back verified, send a 609 letter invoking your FCRA Section 609 rights via certified mail. Step 3 — send a Validation of Debt letter directly to the original creditor. <strong>Going forward:</strong> Set up autopay on every account for at least the minimum payment.'
+    });
+  }
+
+  if (overallUtil!==null) {
+    const s=overallUtil<=6?'pass':overallUtil<=30?'warn':'fail';
+    const t30='$'+Math.ceil(totalLim*0.30).toLocaleString();
+    items.push({status:s,label:'Overall utilization',detail:overallUtil+'% across all cards — '+utilLabel(overallUtil),
+      action:overallUtil<=6?null:
+        '<strong>This is your most urgent fix.</strong> Being over the goal range increases the chance of being denied for new credit. Bring total balance to '+t30+' as the minimum starting point. Focus on the card with the highest utilization first. <em>Optimal pay-down targets are broken down in the Wealth Pack.</em>'
+    });
+  }
+
+  cards.forEach(c=>{
+    if (c.util>6) {
+      const t30='$'+Math.ceil(c.lim*0.30).toLocaleString();
+      let action='Pay down target — Minimum (30%): '+t30+'. <em>Tighter targets for optimal utilization are broken down in the Wealth Pack.</em>';
+      if (c.promoApr&&c.promoExp) action+=' <strong>Promo rate of '+c.promoApr+'% expires '+c.promoExp+'</strong> — pay this down before it resets.';
+      if (c.notes) action+=' <em>Note: '+c.notes+'</em>';
+      items.push({status:c.util>30?'fail':'warn',label:c.name+' — '+c.util+'% utilization',detail:utilLabel(c.util),action});
+    } else if (c.promoApr&&c.promoExp) {
+      items.push({status:'warn',label:c.name+' — promo rate active',detail:c.promoApr+'% expires '+c.promoExp,
+        action:'Pay the remaining balance before '+c.promoExp+' to avoid the standard rate of '+(c.apr?c.apr+'%':'the regular rate')+' kicking in.'+(c.notes?' Note: '+c.notes:'')
+      });
+    }
+  });
+
+  if (!isNaN(derogatory)) {
+    const pass=derogatory===0;
+    items.push({status:pass?'pass':'fail',label:'Derogatory marks',detail:derogatory+' mark'+(derogatory!==1?'s':'')+' — needs to be 0',
+      action:pass?null:'<strong>Start by disputing online</strong> — go directly to the <a href="https://www.equifax.com/personal/credit-report-services/credit-dispute/" target="_blank">Equifax</a>, <a href="https://www.experian.com/disputes/main.html" target="_blank">Experian</a>, and <a href="https://dispute.transunion.com" target="_blank">TransUnion</a> dispute portals. <strong>If it comes back verified:</strong> Send a 609 letter citing your FCRA Section 609 rights via certified mail. <strong>If still verified:</strong> Send a Validation of Debt letter to the original creditor directly. <strong>Also:</strong> Opt out of secondary reporting agencies — LexisNexis, Innovis, SageStream, and CoreLogic — to prevent them from using behind-the-scenes data against you during disputes.'
+    });
+  }
+
+  if (!isNaN(creditAge)) {
+    const s=creditAge>=6?'pass':creditAge>=4?'warn':'fail';
+    items.push({status:s,label:'Average credit age',detail:creditAge+' yr'+(creditAge!==1?'s':'')+' — goal is 6+ years',
+      action:s==='pass'?null:'<strong>Never close old accounts</strong> — even if you don\'t use them. That history is working in your favor. <strong>Get added as an authorized user</strong> on a trusted person\'s account that is 5 or more years old and has under 5% utilization. You don\'t need the physical card — you just need that account to show up on your report. This helps your age AND your total account count at the same time. <strong>If you have a loan you could pay off early</strong> — don\'t. Set it to autopay and let it run its full term. The active reporting age is more valuable than being debt-free early.'
+    });
+  }
+
+  if (!isNaN(totalAccounts)) {
+    const pass=totalAccounts>=10;
+    items.push({status:pass?'pass':'fail',label:'Total accounts',detail:totalAccounts+' total — goal is 10 or more',
+      action:pass?null:'You need '+(10-totalAccounts)+' more account'+((10-totalAccounts)!==1?'s':'')+'. <strong>Authorized user</strong> — get added to a family member or trusted person\'s aged, low-utilization account. You don\'t need the card, just the account on your report. <strong>Self or Credit Strong</strong> — credit builder loans around $25–35 per month that report your on-time payments and give your money back at the end. Set to autopay and let it run. <strong>Secured card</strong> — you put a deposit down, use it lightly, and keep it under 3%. <strong>Bilt Card</strong> — a free card that adds your rent payments to your credit report and earns you rewards at the same time. Space out any new applications to protect your inquiry count and credit age.'
+    });
+  }
+
+  if (!isNaN(hardInquiries)) {
+    const pass=hardInquiries<=3;
+    items.push({status:pass?'pass':'fail',label:'Hard inquiries',detail:hardInquiries+' inquiries — goal is 3 or under',
+      action:pass?null:'Stop applying for new credit right now. Hard inquiries stop affecting your score after 12 months and fall off your report completely after 2 years. <strong>Going forward:</strong> Before applying to any issuer, ask them if they use a soft pull on the initial application and on future limit increase requests. This is a normal question to ask and it protects your score.'
+    });
+  }
+
+  lastResults = items;
+
+  const failCount=items.filter(i=>i.status==='fail').length;
+  const passCount=items.filter(i=>i.status==='pass').length;
+
+  // Credit tier
+  const banner=document.getElementById('tierBanner');
+  const fundableNote=document.getElementById('fundableNote');
+  const ebookNote=document.getElementById('ebookNote');
+  let tierClass, tierLabelText, tierTitleText, tierSubText;
+
+  if (failCount>=4) {
+    tierClass='bad'; tierLabelText='Points to Commaz criteria'; tierTitleText='Bad Credit';
+    tierSubText='Multiple areas of your credit profile need serious attention. Start with payment history and utilization first — those two have the biggest impact.';
+  } else if (failCount>=2) {
+    tierClass='needs'; tierLabelText='Points to Commaz criteria'; tierTitleText='Needs Improvement';
+    tierSubText='Your credit profile needs improvement. Work through the action items below to build toward good credit.';
+  } else if (failCount===1 || items.some(i=>i.status==='warn')) {
+    tierClass='good'; tierLabelText='Points to Commaz criteria'; tierTitleText='Good Credit';
+    tierSubText='Your profile is in good shape — but knowing your numbers is only step one. Learn how to fully maximize your credit inside the Wealth Pack.';
+  } else {
+    tierClass='strong'; tierLabelText='Points to Commaz criteria'; tierTitleText='Strong Credit';
+    tierSubText='Your profile is strong — but strong credit is just the foundation. Learn how to leverage it to its full potential inside the Wealth Pack.';
+  }
+
+  banner.className='tier-banner '+tierClass;
+  document.getElementById('tierLabel').textContent=tierLabelText;
+  document.getElementById('tierTitle').textContent=tierTitleText;
+  document.getElementById('tierSub').textContent=tierSubText;
+  fundableNote.className='tier-fundable-note'+(tierClass==='strong'?' show':'');
+  ebookNote.className='tier-ebook-note'+((tierClass==='bad'||tierClass==='needs')?' show':'');
+
+  // Color download button based on credit tier
+  const dlBtn = document.getElementById('downloadBtn');
+  const dlColors = { bad:'#c0392b', needs:'#1a6fb5', good:'#1a6fb5', strong:'#2d7a2d' };
+  dlBtn.style.background = dlColors[tierClass];
+  dlBtn.style.color = '#ffffff';
+
+  // Stat row
+  const statRow=document.getElementById('statRow');
+  statRow.innerHTML='';
+  if (overallUtil!==null) {
+    const c=utilColor(overallUtil);
+    statRow.innerHTML+=`<div class="stat-card"><div class="stat-label">Overall utilization</div><div class="stat-value" style="color:${c}">${overallUtil}% — <span style="font-size:16px">${utilLabel(overallUtil)}</span></div></div>`;
+  }
+  statRow.innerHTML+=`<div class="stat-card"><div class="stat-label">Criteria passed</div><div class="stat-value">${passCount} / ${items.length}</div><div class="stat-bar"><div class="stat-fill" style="width:${items.length?Math.round((passCount/items.length)*100):0}%;background:var(--green)"></div></div></div>`;
+
+  // Result items
+  const container=document.getElementById('resultItems');
+  container.innerHTML='';
+  const order={fail:0,warn:1,pass:2};
+  [...items].sort((a,b)=>order[a.status]-order[b.status]).forEach(item=>{
+    const div=document.createElement('div');
+    div.className='result-item';
+    const actionHTML = item.action ? `
+      <div class="locked-action">
+        <div class="locked-blur">The step-by-step plan for this item is inside the Wealth Pack. Get the exact moves, the right order, and the reasoning behind each one — built specifically around your situation.</div>
+        <div class="locked-overlay">
+          <span class="lock-icon">🔒</span>
+          <a class="lock-cta-btn" href="https://whop.com/checkout/plan_CMBpMvmsunZEw" target="_blank" rel="noopener">Unlock inside the Wealth Pack</a>
+        </div>
+      </div>` : '';
+    div.innerHTML=`<div class="ri-dot ${item.status}"></div><div><div class="ri-label">${item.label}</div><div class="ri-detail">${item.detail}</div>${actionHTML}</div>`;
+    container.appendChild(div);
+  });
+
+  // Funding sequence awareness — only show for Good or Strong credit
+  if (tierClass==='good' || tierClass==='strong') {
+    document.getElementById('chaseAmexCard').style.display='block';
+  }
+
+  document.getElementById('results').className='results show';
+  document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function downloadSummary() { return; /* locked in free version */
+const DISABLED = true;
+  const cards=getCards();
+  const date=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  const tierTitle=document.getElementById('tierTitle').textContent;
+  const tierSub=document.getElementById('tierSub').textContent;
+
+  let html=`<!DOCTYPE html><html><head><meta charset="UTF-8"/><style>
+    body{font-family:Georgia,serif;font-size:13px;color:#111;padding:48px;max-width:680px;margin:0 auto}
+    h1{font-size:26px;font-weight:900;margin-bottom:4px}.brand{font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:#888;margin-bottom:6px}.date{font-size:11px;color:#888;margin-bottom:28px}
+    hr{border:none;border-top:1px solid #ddd;margin:20px 0}
+    h2{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:12px}
+    table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:16px}
+    th{text-align:left;padding:6px 8px;background:#f5f5f5;font-size:11px;letter-spacing:0.06em;text-transform:uppercase}
+    td{padding:6px 8px;border-bottom:1px solid #eee}
+    .tier-box{padding:16px 20px;border-radius:8px;margin-bottom:20px;border:1px solid #ddd;background:#f9f9f9}
+    .tier-box .t-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#888;margin-bottom:4px}
+    .tier-box .t-title{font-size:22px;font-weight:900;margin-bottom:4px}
+    .tier-box .t-sub{font-size:13px;color:#555}
+    .item{margin-bottom:18px;padding-bottom:18px;border-bottom:1px solid #eee}.item:last-child{border-bottom:none}
+    .item-label{font-size:15px;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:8px}
+    .item-detail{font-size:12px;color:#666;margin-bottom:6px}
+    .item-action{font-size:12px;color:#444;line-height:1.7;padding:10px 12px;background:#f8f8f8;border-left:3px solid #ddd}
+    .dot{width:8px;height:8px;border-radius:50%;display:inline-block;flex-shrink:0}
+    .dot-pass{background:#2d7a2d}.dot-warn{background:#b58800}.dot-fail{background:#c0392b}
+    .footer{margin-top:40px;font-size:11px;color:#aaa;text-align:center}
+  </style></head><body>
+  <div class="brand">Points to Commaz — Wolf Den Ventures LLC</div>
+  <h1>Credit Profile Summary</h1>
+  <div class="date">Generated ${date}</div>
+  <div class="tier-box"><div class="t-label">Points to Commaz criteria</div><div class="t-title">${tierTitle}</div><div class="t-sub">${tierSub}</div></div>
+  <hr/>`;
+
+  if (cards.length) {
+    html+=`<h2>Credit cards</h2><table><tr><th>Card</th><th>Balance</th><th>Limit</th><th>Util</th><th>APR</th><th>Notes</th></tr>`;
+    cards.forEach(c=>{html+=`<tr><td>${c.name}</td><td>$${c.bal.toLocaleString()}</td><td>$${c.lim.toLocaleString()}</td><td>${c.util}%</td><td>${c.apr?c.apr+'%':'—'}</td><td>${c.notes||'—'}</td></tr>`;});
+    html+=`</table><hr/>`;
+  }
+
+  html+=`<h2>Profile inputs</h2><table>`;
+  const fields=[['payHistory','Payment history','%'],['derogatory','Derogatory marks',''],['creditAge','Avg credit age',' yrs'],['totalAccounts','Total accounts',''],['hardInquiries','Hard inquiries','']];
+  fields.forEach(([id,label,unit])=>{ const v=document.getElementById(id).value; if(v) html+=`<tr><td>${label}</td><td>${v}${unit}</td></tr>`; });
+  html+=`</table><hr/><h2>Action plan</h2>`;
+
+  lastResults.forEach(item=>{
+    const clean=item.action?item.action.replace(/<[^>]*>/g,''):null;
+    html+=`<div class="item"><div class="item-label"><span class="dot dot-${item.status}"></span>${item.label}</div><div class="item-detail">${item.detail}</div>${clean?`<div class="item-action">${clean}</div>`:''}</div>`;
+  });
+
+  html+=`<div class="footer">Built by @TheRealEliWolf — Points to Commaz</div></body></html>`;
+
+  const blob=new Blob([html],{type:'text/html'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='ptc_credit_summary.html';a.click();
+  URL.revokeObjectURL(url);
+}
+
+loadTheme();
+loadData();
+if (!document.querySelectorAll('.card-item').length) addCard();
+updateAddCardBtn();
+</script>
+</body>
+</html>
